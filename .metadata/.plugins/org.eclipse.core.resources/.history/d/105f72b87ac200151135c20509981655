@@ -1,0 +1,9 @@
+
+public class guiController {
+	
+	guiController(Client client,ClientGUI clientGUI)
+	{
+		
+		
+	}
+}

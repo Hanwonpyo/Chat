@@ -1,0 +1,66 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+
+public class Server extends Thread{
+
+	private ServerSocket serverSocket=null;
+	private Socket socket;
+	private Vector user= new Vector(); 
+
+	Server()
+	{		
+		connect();
+	}
+		    	
+	private void connect()
+	{
+		try {
+			serverSocket = new ServerSocket(9000);
+		}catch (IOException e) {
+			e.printStackTrace();
+	     }
+		Thread connect_thread = new Thread(new Runnable() { // user connect thread 
+
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Socket socket = serverSocket.accept();
+						
+						InputStream is=socket.getInputStream();
+						DataInputStream dis= new DataInputStream(is);					
+						
+						String name=dis.readUTF();
+				    	
+				    	UserInfo U=new UserInfo(socket, user, name);
+				    	user.addElement(U);
+				    	
+				    	U.start(); // user message i/o thread
+				    	
+				    	
+				    	//socket.close();
+				    }catch (IOException e) {
+				    	e.printStackTrace();
+				     }
+				 }
+			}
+		});
+
+		connect_thread.start();
+		
+	}
+	
+	static String getTime() {
+		SimpleDateFormat f = new SimpleDateFormat("[hh:mm:ss]");
+		return f.format(new Date());
+	} // getTime	
+	
+}

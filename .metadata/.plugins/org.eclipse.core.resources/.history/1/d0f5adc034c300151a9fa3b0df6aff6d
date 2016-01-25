@@ -1,0 +1,23 @@
+import java.io.IOException;
+import java.util.Vector;
+
+public class Sender {
+
+	private Vector user;
+	
+	Sender(Vector user) {
+		this.user=user;
+	}
+	
+	public void show_message(String msg) {
+		for (int i = 0; i < user.size(); i++) {
+			Reciver temp = (Reciver) user.elementAt(i);
+			try {
+				temp.dos.writeUTF(getTime() + " " + name +" :"+msg); //server->client
+			}
+			catch (IOException e) {
+				//message X
+			}
+		}
+	}
+}

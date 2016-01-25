@@ -1,0 +1,35 @@
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Reciver extends Thread{
+	
+	private InputStream is;
+	private DataInputStream dis;
+	
+	Reciver(Socket socket)
+	{
+		is = socket.getInputStream();
+		dis = new DataInputStream(is);
+	}
+	@Override
+		public void run() {
+			while (true) {
+				try {
+					String msg = dis.readUTF(); 
+					control.append_message(msg);
+					
+				} catch (IOException e) {
+					try {
+						os.close();
+						is.close();
+						dos.close();
+						dis.close();
+						socket.close();
+						break;
+					} catch (IOException ex) {
+					  }
+				}
+			}
+	}
+}

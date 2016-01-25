@@ -1,0 +1,19 @@
+
+public class guiController {
+	
+	Client client;
+	ClientGUI clientGUI;
+	guiController(Client client,ClientGUI clientGUI)
+	{
+		this.client=client;
+		this.clientGUI=clientGUI;		
+	}
+	public void append_message(String msg)
+	{
+		clientGUI.getArea().append(msg + "\n");
+	}
+	public void send_message(String msg)
+	{
+		client.send_message(msg);
+	}
+}

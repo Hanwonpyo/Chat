@@ -1,0 +1,86 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
+
+public class Client {
+	
+	private String id;
+	private String ip;
+
+	private Socket socket;
+	private InputStream is;
+	private OutputStream os;
+	private DataInputStream dis;
+	private DataOutputStream dos;
+	ClientGUI gui;
+	
+	Client(ClientGUI gui,String id,String ip)
+	{
+		this.gui=gui;
+		this.id=id;
+		this.ip=ip;
+		
+		try {
+			socket = new Socket(ip,9000);
+			
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		try {
+			is = socket.getInputStream();
+			dis = new DataInputStream(is);
+			os = socket.getOutputStream();
+			dos = new DataOutputStream(os);
+			
+			send_message(id);
+		//	String list = dis.readUTF(); 
+		//	gui.append_list(list);
+
+		} catch (Exception e) {
+		
+		}
+		recive_message();
+	}
+	
+	public void send_message(String msg)
+	{
+		try {
+			if(msg.length()>=1)
+				dos.writeUTF(msg);
+		} catch (IOException e) {
+		
+		}
+	}
+	public void recive_message()
+	{
+		Thread client_thread = new Thread(new Runnable() { 
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						String msg = dis.readUTF(); 
+						gui.append_message(msg);
+						
+					} catch (IOException e) {
+						try {
+							os.close();
+							is.close();
+							dos.close();
+							dis.close();
+							socket.close();
+							break;
+						} catch (IOException ex) {
+						  }
+					}
+				}
+			}
+		});
+		client_thread.start();
+		
+	}
+}

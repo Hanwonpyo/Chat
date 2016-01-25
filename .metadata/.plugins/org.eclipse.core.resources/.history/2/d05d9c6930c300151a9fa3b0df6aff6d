@@ -1,0 +1,43 @@
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Vector;
+
+public class Connect extends Thread{ //각각의 유저들의 연결을 기다리는 thread
+
+
+	private ServerSocket serverSocket;
+	private Socket socket;
+	private Vector user= new Vector(); 
+		
+	Connect(ServerSocket serverSocket)
+	{
+		this.serverSocket=serverSocket;
+	}
+	
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Socket socket = serverSocket.accept();
+				
+				InputStream is=socket.getInputStream();
+				DataInputStream dis= new DataInputStream(is);					
+				
+				String name=dis.readUTF();
+		    	
+		    	Reciver R=new Reciver(socket, user, name);
+		    	user.addElement(R);
+		    	
+		    	R.start(); // user message i/o thread
+		    	
+		    	
+		    	//socket.close();
+		    }catch (IOException e) {
+		    	e.printStackTrace();
+		     }
+		 }
+	}
+}

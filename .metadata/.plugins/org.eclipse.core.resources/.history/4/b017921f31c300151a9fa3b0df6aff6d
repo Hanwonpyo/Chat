@@ -1,0 +1,57 @@
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Vector;
+
+public class Connect extends Thread{ //각각의 유저들의 연결을 기다리는 thread
+
+
+	private ServerSocket serverSocket;
+	private Socket socket;
+	private Vector user= new Vector(); 
+		
+	Connect(ServerSocket serverSocket)
+	{
+		this.serverSocket=serverSocket;
+	}
+
+	public void show_connection(String name)
+	{
+		for (int i = 0; i < user.size(); i++) {
+			Reciver temp = (Reciver) user.elementAt(i);
+			try {
+				temp.dos.writeUTF(name + " is connect"); //server->client
+			} 
+			catch (IOException e) {
+				//message X
+			}
+		}			
+	}
+	
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Socket socket = serverSocket.accept();
+				
+				InputStream is=socket.getInputStream();
+				DataInputStream dis= new DataInputStream(is);					
+				
+				String name=dis.readUTF(); //최초 연결 확인 ( "han is connect")
+				show_connection(name);
+		    	Reciver R=new Reciver(socket, user, name);
+		    	user.addElement(R); //vector 에 연결된 사용자 추가
+		    	
+		    	R.start(); // user message i/o thread
+		    	
+		    	
+		    	//socket.close();
+		    }catch (IOException e) {
+		    	e.printStackTrace();
+		     }
+		 }
+	}
+	
+}

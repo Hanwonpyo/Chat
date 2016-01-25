@@ -1,0 +1,11 @@
+
+public class guiController {
+	
+	Client client;
+	ClientGUI clientGUI;
+	guiController(Client client,ClientGUI clientGUI)
+	{
+		this.client=client;
+		this.clientGUI=clientGUI;		
+	}
+}
