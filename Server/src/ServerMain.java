@@ -2,6 +2,7 @@
 public class ServerMain {
 	public static void main(String[] args)
 	{
-		ServerGUI S = new ServerGUI();
+		ServerGUI server_gui = new ServerGUI();
+		Server server=new Server();
 	}
 }

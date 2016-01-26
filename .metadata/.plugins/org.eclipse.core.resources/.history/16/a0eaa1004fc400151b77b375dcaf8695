@@ -1,0 +1,44 @@
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
+public class User {
+	
+	private Socket socket;
+	
+	private OutputStream os;
+	private DataOutputStream dos;
+	
+	private String name;
+	private int authority;
+	
+	public User(Socket socket) {
+		// TODO Auto-generated constructor stub
+		this.socket=socket;
+		
+		try {
+			os = socket.getOutputStream();
+			dos = new DataOutputStream(os);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessage(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+}

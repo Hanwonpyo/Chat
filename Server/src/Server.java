@@ -1,10 +1,8 @@
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Vector;
 
-
-public class Server { //서버에서 일단 연결시킨다음 방 결정하고 그안에서 기존의 thread 사용할것
+public class Server {
 	
 	private ServerSocket serverSocket=null;
 //	public static Vector user=new Vector();
@@ -17,7 +15,7 @@ public class Server { //서버에서 일단 연결시킨다음 방 결정하고 그안에서 기존의 t
 			e.printStackTrace();
 	     }
 		
-		Connect connect=new Connect(serverSocket); //유저가 서버에 연결 
-		connect.start();
+		ConnectThread connectThread=new ConnectThread(serverSocket);
+		connectThread.start();
 	}	
 }

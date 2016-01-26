@@ -1,0 +1,5 @@
+
+public interface Service {
+	
+	public abstract void run(Object jsonObjectData);
+}

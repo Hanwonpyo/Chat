@@ -4,7 +4,6 @@ public class guiController { //
 	Client client;
 	ClientGUI clientGUI;
 	
-	
 	public void set_logic(Client client)
 	{
 		this.client=client;

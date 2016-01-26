@@ -1,0 +1,21 @@
+
+import java.io.IOException;
+import java.net.ServerSocket;
+
+public class Server {
+	
+	private ServerSocket serverSocket=null;
+//	public static Vector user=new Vector();
+	
+	Server()
+	{		
+		try {
+			serverSocket = new ServerSocket(9000);
+		}catch (IOException e) {
+			e.printStackTrace();
+	     }
+		
+		ConnectThread connect=new ConnectThread(serverSocket);
+		connectThread.start();
+	}	
+}

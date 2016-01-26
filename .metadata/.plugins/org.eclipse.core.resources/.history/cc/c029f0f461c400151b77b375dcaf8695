@@ -1,0 +1,15 @@
+
+public class Controller {
+	
+	private static Controller control = new Controller();
+	
+	public static Controller getInstance(){
+		return control;
+	}
+	
+	public void execute(String reqCode, Object reqDataJsonObject) {
+		Service service=commandFactory.getCommand(reqCode);
+		service.run(reqDataJsonObject);
+	}
+}
+}

@@ -1,0 +1,35 @@
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+
+public class ShowMsgAll implements Service{
+	
+	private UserManager userManager;
+	public void run(Object jsonObjectData) {
+		
+		JSONObject jsonObject=(JSONObject)jsonObjectData;
+		String msg = (String) jsonObject.get("msg");
+		userManager=UserManager.getInstance();
+		
+		Iterator<String> it = userManager.list().get(key).keySet().iterator();
+		String key = "";
+		while(it.hasNext()){
+			key = it.next();
+			try{
+				userManager.list().get(key).writeUTF(getTime()+" "+msg);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	//temp.dos.writeUTF(getTime() + " " + sender_name +" :"+msg); //server->client
+	
+	static String getTime() {
+		SimpleDateFormat f = new SimpleDateFormat("[hh:mm:ss]");
+		return f.format(new Date());
+	} // getTime	
+}

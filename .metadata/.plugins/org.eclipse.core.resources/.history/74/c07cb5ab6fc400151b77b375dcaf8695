@@ -1,0 +1,10 @@
+
+public class PersonalChat extends Service{
+
+	@Override
+	public void run(Object jsonObjectData) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

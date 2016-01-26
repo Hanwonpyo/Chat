@@ -48,7 +48,6 @@ public class ServerGUI extends JFrame implements ActionListener{
 		if(e.getSource()==button_start) {
 			button_start.setText("Server is running");
 			button_start.setEnabled(false);
-			Server S=new Server();
 		}
 	}
 }

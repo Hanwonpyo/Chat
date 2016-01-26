@@ -1,0 +1,40 @@
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Vector;
+
+public class Connect{ //각각의 유저들의 연결을 기다리는 thread
+
+
+	private ServerSocket serverSocket;
+	private Socket socket;
+			
+	Connect(ServerSocket serverSocket)
+	{
+		this.serverSocket=serverSocket;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Socket socket = serverSocket.accept();
+  	                
+	            ReciverThread reciverThread= new ReciverThread(socket);
+	            clientAcceptThread.start();
+	            Client client = new Client(socket);
+	            ClientManager.getInstance().add(client,socket);
+		    	
+		    	
+		    	//socket.close();
+		    }catch (IOException e) {
+		    	e.printStackTrace();
+		     }
+		 }
+	} 
+}

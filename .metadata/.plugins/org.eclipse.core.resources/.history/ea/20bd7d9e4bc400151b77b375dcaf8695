@@ -1,0 +1,33 @@
+
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserManager {
+	
+	private static UserManager userManager = new UserManager();
+	
+	private Map<Socket,User> UserList;
+	
+	UserManager(){
+		UserList = new HashMap<Socket,User>();
+		
+	}
+	public static UserManager getInstance(){
+		return userManager;
+	}
+	
+	public void add(Socket socket, User user) {
+		// TODO Auto-generated method stub
+		this.UserList.put(socket, user);
+	}
+	public void remove()
+	
+	public void sendAll(String message){
+		for( Socket key : UserList.keySet() ){
+            UserList.get("key").sendMessage(message);
+        }
+	}
+	
+	
+}

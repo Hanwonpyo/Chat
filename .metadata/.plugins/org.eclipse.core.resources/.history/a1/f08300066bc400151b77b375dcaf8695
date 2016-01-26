@@ -1,0 +1,8 @@
+
+public class ServiceSelector {
+
+	public Service getService()
+	{
+		return service;
+	}
+}
